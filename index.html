@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Santa Brígida con Vinos 2026</title>
+<meta name="description" content="Santa Brígida con Vinos 2026. Del 1 al 29 de noviembre: catas, visitas a bodega, maridajes sonoros y Noches de Vino en la Villa de Santa Brígida, Gran Canaria.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Santa Brígida con Vinos 2026">
+<meta property="og:description" content="Del 1 al 29 de noviembre: catas, visitas a bodega, maridajes sonoros y Noches de Vino en la Villa de Santa Brígida.">
+<meta property="og:image" content="img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#2A1218">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='10' fill='%237A1F35'/%3E%3Cpath d='M15 9h18c0 9-3 16-9 16s-9-7-9-16z' fill='%23fff'/%3E%3Cpath d='M24 25v11M17 39h14' stroke='%23fff' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: portada a sangre con foto de bodega + calendario de noviembre → el programa → agenda filtrable de carteles → contacto */
+:root{
+  --bg:#F2F0EE; --surface:#FFFFFF; --ink:#211C1E; --muted:#6A6064; --line:#DDD6D8;
+  --wine:#7A1F35; --wine-ink:#FFFFFF; --vine:#4C5A2E; --ash:#2A2326; --gold:#C9A35A;
+  --night:#2A1218;
+  --cat-cata:#7A1F35; --cat-bodega:#4C5A2E; --cat-noche:#2E2741; --cat-trad:#8A5A2B; --cat-pro:#3A4A57;
+  --display:"Gloock", Georgia, "Times New Roman", serif;
+  --body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --radius:6px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#171315; --surface:#221D20; --ink:#F1ECEE; --muted:#B1A6AB; --line:#3A3236;
+  --wine:#C4566F; --wine-ink:#1A0F13; --vine:#9AAE6A; --ash:#0F0C0D; --gold:#D4A957;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#171315; --surface:#221D20; --ink:#F1ECEE; --muted:#B1A6AB; --line:#3A3236;
+  --wine:#C4566F; --wine-ink:#1A0F13; --vine:#9AAE6A; --ash:#0F0C0D; --gold:#D4A957;
+  color-scheme:dark}
+*{box-sizing:border-box}
+img{max-width:100%}
+body{margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px))}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.05;text-wrap:balance;margin:0}
+.label{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+/* Loader: se oculta solo por CSS aunque falle el JS */
+.loader{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:var(--night);color:#F4E9EC;
+  animation:loaderOut .5s ease 1.4s forwards}
+.loader.done{animation:loaderOut .4s ease forwards}
+.loader svg{width:56px;height:56px}
+.loader .fill{transform-origin:50% 100%;animation:pour 1.1s var(--ease) infinite alternate}
+@keyframes pour{from{transform:scaleY(.15)}to{transform:scaleY(1)}}
+@keyframes loaderOut{to{opacity:0;visibility:hidden}}
+
+/* Reveal con respaldo CSS */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease);animation:revealFallback .8s ease 1.6s forwards}
+.reveal.visible{opacity:1;transform:none;animation:none}
+@keyframes revealFallback{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important;animation-duration:.01s!important;animation-delay:0s!important}
+  .reveal{opacity:1;transform:none}
+}
+
+/* Nav */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:31;background:var(--night)}
+nav.top{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);z-index:30;color:#fff;transition:background .3s,color .3s,box-shadow .3s}
+nav.top.solid{background:color-mix(in srgb,var(--bg) 94%,transparent);color:var(--ink);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--line)}
+nav.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:16px}
+.brand{font-family:var(--display);font-size:21px;text-decoration:none;white-space:nowrap}
+.brand span{color:var(--gold)}
+nav.top.solid .brand span{color:var(--wine)}
+.links{display:flex;align-items:center;gap:26px;list-style:none;margin:0;padding:0;font-weight:500;font-size:15px}
+.links a{text-decoration:none;opacity:.85}
+.links a:hover{opacity:1}
+.links .btn{opacity:1}
+.burger{display:none;background:none;border:0;color:inherit;width:44px;height:44px;padding:10px;cursor:pointer}
+.burger span{display:block;height:2px;background:currentColor;margin:5px 0;transition:transform .3s}
+nav.top.open .burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+nav.top.open .burger span:nth-child(2){opacity:0}
+nav.top.open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media (max-width:760px){
+  .burger{display:block}
+  .links{position:absolute;left:0;right:0;top:100%;flex-direction:column;align-items:stretch;gap:0;background:var(--bg);color:var(--ink);
+    padding:8px max(16px, env(safe-area-inset-right,0px)) 20px max(16px, env(safe-area-inset-left,0px));box-shadow:0 12px 24px rgba(0,0,0,.18)}
+  .links li a{display:block;padding:14px 0;border-bottom:1px solid var(--line)}
+  .links li:last-child a{border:0;margin-top:14px;justify-content:center}
+  nav.top:not(.open) .links{display:none}
+  nav.top.open{background:var(--bg);color:var(--ink)}
+  nav.top.open .brand span{color:var(--wine)}
+}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px/1 var(--body);padding:14px 20px;border-radius:var(--radius);border:1px solid transparent;text-decoration:none;cursor:pointer;transition:filter .2s,background .2s,border-color .2s}
+.btn-primary{background:var(--wine);color:var(--wine-ink)}
+.btn-primary:hover{filter:brightness(1.1)}
+.btn-gold{background:var(--gold);color:#22170C}
+.btn-gold:hover{filter:brightness(1.08)}
+.btn-line{border-color:rgba(255,255,255,.5);color:#fff;background:transparent}
+.btn-line:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+.btn[aria-disabled="true"]{background:transparent;color:var(--muted);border:1px dashed var(--line);cursor:default;filter:none}
+
+/* Hero */
+.hero{position:relative;color:#fff;background:var(--night);isolation:isolate;overflow:hidden;min-height:min(100svh,900px);display:flex;align-items:flex-end}
+.hero-bg{position:absolute;inset:0;z-index:-2}
+.hero-bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);animation:slowZoom 14s ease-out forwards}
+@keyframes slowZoom{to{transform:scale(1)}}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(180deg,rgba(26,10,14,.55) 0%,rgba(26,10,14,.25) 35%,rgba(26,10,14,.82) 78%,rgba(26,10,14,.95) 100%),
+             linear-gradient(90deg,rgba(26,10,14,.7) 0%,rgba(26,10,14,0) 65%)}
+.hero .wrap{width:100%;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:48px;align-items:end;padding-block:140px 56px}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr;gap:36px;padding-block:120px 40px}}
+.hero .label{color:var(--gold)}
+.hero h1{font-size:clamp(56px,10vw,132px);letter-spacing:-.015em;margin-top:16px;line-height:.92}
+.hero h1 em{font-style:italic;display:block;color:#F4D9DF}
+.hero .dates{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin-top:26px}
+.hero .dates strong{font-family:var(--display);font-weight:400;font-size:clamp(24px,3vw,34px)}
+.pill{font:600 13px/1 var(--body);padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22)}
+.hero p.lede{max-width:52ch;color:rgba(255,255,255,.82);font-size:18px;margin:18px 0 0}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.next{display:flex;gap:14px;align-items:center;margin-top:30px;padding-top:22px;border-top:1px solid rgba(255,255,255,.18);text-decoration:none;max-width:520px}
+.next .d{font-family:var(--display);font-size:44px;line-height:.9;color:var(--gold);min-width:2ch}
+.next small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.next b{font-weight:600;font-size:16px}
+.next:hover b{text-decoration:underline}
+
+/* Calendar (sobre la foto) */
+.cal{background:rgba(20,8,12,.55);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:22px}
+.cal-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+.cal-head h2{font-size:28px}
+.cal-head .label{color:rgba(255,255,255,.6)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;font-variant-numeric:tabular-nums}
+.cal-grid .dow{font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.55);text-align:center;padding-bottom:4px}
+.day{aspect-ratio:1;max-width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:5px;font-size:14px;color:rgba(255,255,255,.4);border:0;background:transparent;font-family:var(--body)}
+.day.has{background:rgba(201,163,90,.16);color:#fff;font-weight:700;cursor:pointer;transition:background .2s,color .2s}
+.day.has:hover,.day.has:focus-visible{background:var(--gold);color:#22170C}
+.day .dots{display:flex;gap:2px}
+.day .dots i{width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.75}
+.cal-foot{margin-top:12px;font-size:13px;color:rgba(255,255,255,.6)}
+
+/* About */
+.about{background:var(--surface);border-bottom:1px solid var(--line)}
+.about .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:40px;padding-block:72px}
+@media (max-width:860px){.about .wrap{grid-template-columns:1fr;gap:16px;padding-block:48px}}
+.about h2{font-size:clamp(32px,4.4vw,50px)}
+.about p{margin:0 0 14px;max-width:64ch;font-size:17px}
+.facts{display:flex;flex-wrap:wrap;gap:36px;margin-top:28px;padding-top:24px;border-top:1px solid var(--line)}
+.facts div{display:flex;flex-direction:column}
+.facts b{font-family:var(--display);font-weight:400;font-size:44px;line-height:1;color:var(--wine);font-variant-numeric:tabular-nums}
+.facts span{font-size:13px;color:var(--muted);margin-top:4px}
+
+/* Events */
+#eventos .wrap{padding-block:72px}
+.ev-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px;margin-bottom:28px}
+.ev-head h2{font-size:clamp(36px,5.4vw,60px)}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:500 14px/1 var(--body);padding:9px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.chip i{width:9px;height:9px;border-radius:50%}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:36px 24px}
+.card{display:flex;flex-direction:column;gap:14px;scroll-margin-top:96px}
+.card.flash .poster{box-shadow:0 0 0 3px var(--gold)}
+.poster{position:relative;aspect-ratio:4/5;max-width:100%;border-radius:var(--radius);overflow:hidden;color:#fff;transition:box-shadow .3s;background:var(--night)}
+.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.card:hover .poster img{transform:scale(1.04)}
+.poster .ph{position:absolute;inset:0;padding:18px;display:flex;flex-direction:column;justify-content:space-between;
+  background:radial-gradient(120% 80% at 100% 0%,rgba(255,255,255,.14),transparent 60%),radial-gradient(90% 70% at 0% 100%,rgba(0,0,0,.35),transparent 70%),var(--c)}
+.ph .num{font-family:var(--display);font-size:120px;line-height:.85}
+.ph .mo{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+.ph .t{font-family:var(--display);font-size:24px;line-height:1.1;text-wrap:balance}
+.ph svg{position:absolute;right:14px;top:14px;width:46px;height:46px;opacity:.55}
+.stamp{position:absolute;left:12px;top:12px;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;width:58px;padding:8px 0 7px;border-radius:5px;background:rgba(20,8,12,.78);backdrop-filter:blur(6px);color:#fff;line-height:1}
+.stamp b{font-family:var(--display);font-weight:400;font-size:26px}
+.stamp small{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.8;margin-top:3px}
+.poster:not(:has(img)) .stamp{display:none}
+.badge{position:absolute;right:12px;bottom:12px;z-index:2;font:600 12px/1 var(--body);padding:7px 10px;border-radius:999px;background:rgba(20,8,12,.72);color:#fff}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--mono);font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.card h3{font-size:26px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.card .actions{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-top:4px}
+.card .btn{padding:11px 16px;font-size:14px}
+.price{font-family:var(--display);font-size:22px}
+.price small{font-family:var(--body);font-size:12px;color:var(--muted)}
+.free{font-weight:600;font-size:14px;color:var(--vine)}
+.card.past{opacity:.55}
+.empty{color:var(--muted);padding:40px 0}
+
+/* Footer */
+.foot{background:var(--ash);color:#EFE7EA}
+.foot .wrap{padding-block:64px 28px;display:grid;gap:40px}
+.foot h2{font-size:clamp(30px,4.4vw,48px)}
+.foot .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px}
+.foot .label{color:var(--gold)}
+.foot p{margin:8px 0 0;max-width:52ch;color:rgba(239,231,234,.8)}
+.copy{display:inline-flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.copy code{font-family:var(--mono);font-size:14px;user-select:all}
+.copy button{font:600 13px/1 var(--body);padding:8px 12px;border-radius:var(--radius);border:1px solid rgba(239,231,234,.4);background:transparent;color:#EFE7EA;cursor:pointer}
+.partners{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.partners span{font-size:14px;padding:10px 14px;border:1px solid rgba(239,231,234,.22);border-radius:var(--radius)}
+.social{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.social a{font-size:14px;padding:9px 14px;border-radius:999px;border:1px solid rgba(239,231,234,.3);text-decoration:none}
+.legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 20px;font-size:13px;color:rgba(239,231,234,.6);border-top:1px solid rgba(239,231,234,.15);padding-top:20px}
+.legal a{color:inherit}
+</style>
+</head>
+<body>
+
+
+<div class="loader" id="loader" aria-hidden="true">
+  <svg viewBox="0 0 48 48" fill="none">
+    <clipPath id="cup"><path d="M14 6h20c0 10-3 18-10 18S14 16 14 6z"/></clipPath>
+    <rect class="fill" x="10" y="6" width="28" height="18" fill="#C4566F" clip-path="url(#cup)"/>
+    <path d="M14 6h20c0 10-3 18-10 18S14 16 14 6z" stroke="currentColor" stroke-width="2"/>
+    <path d="M24 24v14M16 42h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+</div>
+
+<nav class="top" id="nav" aria-label="Principal">
+  <div class="wrap">
+    <a class="brand" href="#inicio">Santa Brígida <span>con Vinos</span></a>
+    <button class="burger" id="burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="links"><span></span><span></span><span></span></button>
+    <ul class="links" id="links">
+      <li><a href="#programa">El programa</a></li>
+      <li><a href="#eventos">Agenda</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+      <li><a class="btn btn-gold" href="#eventos">Reservar</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="inicio">
+  <picture class="hero-bg">
+    <source media="(max-width: 700px)" srcset="img/hero-m.jpg">
+    <img src="img/hero.jpg" alt="" fetchpriority="high">
+  </picture>
+  <div class="wrap">
+    <div>
+      <div class="label">Villa de Santa Brígida · Gran Canaria · Edición 2026</div>
+      <h1>Santa Brígida <em>con Vinos</em></h1>
+      <div class="dates"><strong>Del 1 al 29 de noviembre</strong><span class="pill" id="countLabel">18 actividades</span><span class="pill" id="countdown" hidden></span></div>
+      <p class="lede">Un mes entero dedicado al vino de la Villa: catas, visitas a bodega, maridajes sonoros, las Noches de Vino y una ruta por la Caldera de Bandama.</p>
+      <div class="cta-row">
+        <a class="btn btn-gold" href="#eventos">Ver actividades y reservar</a>
+        <a class="btn btn-line" id="pdfBtn" href="#" target="_blank" rel="noopener" hidden>Descargar programa (PDF)</a>
+      </div>
+      <a class="next" id="next" href="#eventos" hidden></a>
+    </div>
+    <aside class="cal" aria-label="Calendario de noviembre 2026">
+      <div class="cal-head"><h2>Noviembre</h2><span class="label">2026</span></div>
+      <div class="cal-grid" id="cal"></div>
+      <div class="cal-foot">Pulsa un día marcado para ver su actividad.</div>
+    </aside>
+  </div>
+</header>
+
+<section class="about" id="programa">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="label">El programa</div>
+      <h2 style="margin-top:10px">El mes del vino en la Villa</h2>
+    </div>
+    <div class="reveal">
+      <p>Santa Brígida con Vinos es un programa cultural y enoturístico que celebra la riqueza vitivinícola y patrimonial del municipio. Arranca con la misa de bendición de la uva y recorre todo noviembre con catas, talleres de iniciación, maridajes sonoros, visitas a las bodegas del municipio y las ya emblemáticas Noches de Vino.</p>
+      <p>Su objetivo es impulsar los vinos de la D.O. Gran Canaria, dinamizar la economía local y atraer visitantes, combinando tradición, innovación y cultura en un entorno único entre el Monte Lentiscal y la Caldera de Bandama.</p>
+      <div class="facts" id="facts"></div>
+    </div>
+  </div>
+</section>
+
+<section id="eventos">
+  <div class="wrap">
+    <div class="ev-head reveal">
+      <div>
+        <div class="label">Agenda</div>
+        <h2 style="margin-top:10px">Actividades</h2>
+      </div>
+      <div class="filters" id="filters" role="group" aria-label="Filtrar por tipo"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<footer class="foot" id="contacto">
+  <div class="wrap">
+    <h2 class="reveal">Contacto e inscripciones</h2>
+    <div class="cols">
+      <div>
+        <div class="label">Inscripciones</div>
+        <p>Las actividades con plazas limitadas se reservan desde el botón de cada evento. Para dudas o grupos, escríbenos.</p>
+        <div class="copy" id="mailBox"></div>
+        <div class="social" id="social"></div>
+      </div>
+      <div>
+        <div class="label">Organizan y colaboran</div>
+        <div class="partners" id="partners"></div>
+      </div>
+    </div>
+    <div class="legal"><span id="legal"></span><span id="legalLinks"></span></div>
+  </div>
+</footer>
+
+<script>
+/* ================================================================
+   CONFIGURACIÓN GENERAL — editar aquí
+   ================================================================ */
+const CONFIG = {
+  email: "",            // correo de inscripciones, p. ej. "inscripciones@..."
+  programaPdf: "",      // enlace al PDF del programa completo
+  redes: [              // p. ej. {nombre:"Instagram", url:"https://instagram.com/..."}
+  ],
+  legales: [            // p. ej. {nombre:"Aviso legal", url:"aviso-legal.html"}
+  ],
+  colaboradores: [
+    "Ayuntamiento de la Villa de Santa Brígida",
+    "Cabildo de Gran Canaria · Consejería de Sector Primario",
+    "Ruta del Vino de Gran Canaria",
+    "D.O. Gran Canaria"
+  ],
+  copyright: "© 2026 Santa Brígida con Vinos · Fotografías de ambiente: Freepik"
+};
+
+/* ================================================================
+   EVENTOS — una ficha por actividad.
+   imagen: ruta del cartel (p. ej. "img/01-misa.jpg"). Si no existe, se muestra el cartel automático.
+   acceso: "pago" (con precio), "inscripcion" (gratuita con reserva) o "libre".
+   url: enlace de pago o inscripción. Vacío = botón "próximamente".
+   ================================================================ */
+const EVENTOS = [
+  {id:"01-misa", fecha:"2026-11-01", hora:"11:00", titulo:"Misa de bendición de la uva y deshoje", lugar:"Iglesia de Santa Brígida", categoria:"trad",
+   descripcion:"Misa para dar comienzo al mes del vino y bendecir la uva de todo nuestro sector vitivinícola.", acceso:"libre", precio:null, url:"", imagen:"img/01-misa.jpg"},
+  {id:"02-cata", fecha:"2026-11-05", hora:"19:00–20:30", titulo:"Taller de cata de vinos", lugar:"Casa del Vino", categoria:"cata",
+   descripcion:"Taller de iniciación a la cata con vinos de la D.O. Gran Canaria.", acceso:"pago", precio:5, url:"", imagen:"img/02-cata.jpg"},
+  {id:"03-maridaje-sonoro", fecha:"2026-11-06", hora:"20:30", titulo:"Maridaje sonoro", lugar:"Centro Cultural de la Villa", categoria:"cata",
+   descripcion:"Vino y música en directo pensados para disfrutarse juntos. Aforo limitado.", acceso:"pago", precio:5, url:"", imagen:"img/03-maridaje-sonoro.jpg"},
+  {id:"04-guateque", fecha:"2026-11-07", hora:"20:00–01:00", titulo:"Guateque y vinos", lugar:"Parque Municipal", categoria:"noche",
+   descripcion:"El parque se convierte en una noche con la mejor música de las décadas, vino y tapas. Ven vestido de época.", acceso:"libre", precio:null, url:"", imagen:"img/04-guateque.jpg"},
+  {id:"05-bodega", fecha:"2026-11-08", hora:"11:30–14:00", titulo:"Visita a bodega", lugar:"Bodega del municipio", categoria:"bodega",
+   descripcion:"Conoce una bodega de la Villa y degusta sus vinos con tapas de queso, aceite y producto local.", acceso:"pago", precio:10, url:"", imagen:"img/05-bodega.jpg"},
+  {id:"06-maridaje-sonoro", fecha:"2026-11-12", hora:"20:30", titulo:"Maridaje sonoro", lugar:"Centro Cultural de la Villa", categoria:"cata",
+   descripcion:"Segunda sesión de vino y música en directo. Aforo limitado.", acceso:"pago", precio:5, url:"", imagen:"img/06-maridaje-sonoro.jpg"},
+  {id:"07-monologos", fecha:"2026-11-13", hora:"20:30–00:00", titulo:"Vino, música y monólogos", lugar:"Calle Real", categoria:"noche",
+   descripcion:"La Calle Real se llena de humor y saxo: un humorista y un saxofonista dinamizan la noche.", acceso:"libre", precio:null, url:"", imagen:"img/07-monologos.jpg"},
+  {id:"08-bodega", fecha:"2026-11-14", hora:"11:30–14:00", titulo:"Visita a bodega", lugar:"Bodega del municipio", categoria:"bodega",
+   descripcion:"Conoce una bodega de la Villa y degusta sus vinos con tapas de queso, aceite y producto local.", acceso:"pago", precio:10, url:"", imagen:"img/08-bodega.jpg"},
+  {id:"09-concierto", fecha:"2026-11-14", hora:"20:30–22:30", titulo:"Concierto", lugar:"Centro Cultural de la Villa", categoria:"noche",
+   descripcion:"Concierto de artista invitado. Próximamente anunciaremos el cartel.", acceso:"libre", precio:null, url:"", imagen:"img/09-concierto.jpg"},
+  {id:"10-quesos", fecha:"2026-11-15", hora:"12:00–13:30", titulo:"Maridaje, vinos y quesos", lugar:"Mercado de Santa Brígida", categoria:"cata",
+   descripcion:"Vinos de la Villa y quesos de la isla en un maridaje en el Mercado.", acceso:"pago", precio:5, url:"", imagen:"img/10-quesos.jpg"},
+  {id:"11-cata", fecha:"2026-11-19", hora:"19:00–20:30", titulo:"Taller de cata de vinos", lugar:"Casa del Vino", categoria:"cata",
+   descripcion:"Segunda sesión del taller de iniciación a la cata.", acceso:"pago", precio:5, url:"", imagen:"img/11-cata.jpg"},
+  {id:"12-pal-monte", fecha:"2026-11-20", hora:"20:00–00:00", titulo:"Noches de Vino P'al Monte", lugar:"Aparcamiento anexo a la Iglesia del Monte", categoria:"noche",
+   descripcion:"Noche de tapas y vino en El Monte.", acceso:"libre", precio:null, url:"", imagen:"img/12-pal-monte.jpg"},
+  {id:"13-boleros", fecha:"2026-11-21", hora:"20:00–00:00", titulo:"Vinos y boleros", lugar:"Centro Cultural de la Villa", categoria:"noche",
+   descripcion:"Concierto de varios artistas con el bolero como protagonista.", acceso:"libre", precio:null, url:"", imagen:"img/13-boleros.jpg"},
+  {id:"14-bodega", fecha:"2026-11-22", hora:"11:30–14:00", titulo:"Visita a bodega", lugar:"Bodega del municipio", categoria:"bodega",
+   descripcion:"Conoce una bodega de la Villa y degusta sus vinos con tapas de queso, aceite y producto local.", acceso:"pago", precio:10, url:"", imagen:"img/14-bodega.jpg"},
+  {id:"15-jornadas", fecha:"2026-11-23", hora:"Mañana", titulo:"Jornadas profesionales", lugar:"Bodega del municipio", categoria:"pro",
+   descripcion:"Encuentro de profesionales del sector vitivinícola.", acceso:"inscripcion", precio:null, url:"", imagen:"img/15-jornadas.jpg"},
+  {id:"16-noche-vinos", fecha:"2026-11-27", hora:"20:00–01:00", titulo:"Noche de Vinos Villa de Santa Brígida", lugar:"Aparcamiento Municipal", categoria:"noche",
+   descripcion:"La gran noche del programa: el mejor vino, las mejores tapas y música en directo.", acceso:"libre", precio:null, url:"", imagen:"img/16-noche-vinos.jpg"},
+  {id:"17-bodega", fecha:"2026-11-28", hora:"11:30–14:00", titulo:"Visita a bodega", lugar:"Bodegas del municipio", categoria:"bodega",
+   descripcion:"Conoce una bodega de la Villa y degusta sus vinos con tapas de queso, aceite y producto local.", acceso:"pago", precio:10, url:"", imagen:"img/17-bodega.jpg"},
+  {id:"18-bandama", fecha:"2026-11-29", hora:"09:00–14:00", titulo:"Ruta etnográfica", lugar:"Caldera de Bandama", categoria:"trad",
+   descripcion:"Visita guiada a la Caldera de Bandama y su paisaje de viñedo y tradición.", acceso:"inscripcion", precio:null, url:"", imagen:"img/18-bandama.jpg"}
+];
+
+const CATEGORIAS = {
+  cata:   {nombre:"Catas y maridajes",   color:"var(--cat-cata)"},
+  bodega: {nombre:"Visitas a bodega",    color:"var(--cat-bodega)"},
+  noche:  {nombre:"Noches y música",     color:"var(--cat-noche)"},
+  trad:   {nombre:"Tradición y entorno", color:"var(--cat-trad)"},
+  pro:    {nombre:"Profesional",         color:"var(--cat-pro)"}
+};
+
+/* ================================================================ */
+const $ = id => document.getElementById(id);
+const safe = (fn, name) => { try { fn(); } catch (err) { console.warn("[SBV]", name, err); } };
+const DIAS = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const d = iso => new Date(iso + "T12:00:00");
+const hoy = new Date(); hoy.setHours(0,0,0,0);
+const GLASS = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 6h20c0 10-3 18-10 18S14 16 14 6z"/><path d="M24 24v14M16 42h16"/></svg>';
+let filtro = "todas";
+
+function boton(e){
+  if(e.acceso === "libre") return `<span class="free">Entrada libre</span>`;
+  const txt = e.acceso === "pago" ? "Reservar plaza" : "Inscribirme";
+  const left = e.acceso === "pago" ? `<span class="price">${e.precio} € <small>/ persona</small></span>` : `<span class="free">Gratuita con inscripción</span>`;
+  const btn = e.url
+    ? `<a class="btn btn-primary" href="${esc(e.url)}" target="_blank" rel="noopener">${txt}</a>`
+    : `<span class="btn" aria-disabled="true">Inscripción próximamente</span>`;
+  return left + btn;
+}
+
+function poster(e){
+  const f = d(e.fecha), cat = CATEGORIAS[e.categoria];
+  const ph = `<div class="ph" style="--c:${cat.color}">${GLASS}
+      <div><div class="mo">${DIAS[f.getDay()]} · noviembre</div><div class="num">${f.getDate()}</div></div>
+      <div class="t">${esc(e.titulo)}</div></div>`;
+  const img = e.imagen ? `<img src="${esc(e.imagen)}" alt="${esc(e.titulo)}" loading="lazy" onerror="this.remove()">` : "";
+  const stamp = `<span class="stamp"><b>${f.getDate()}</b><small>${DIAS[f.getDay()].slice(0,3)}</small></span>`;
+  return `<div class="poster">${ph}${img}${stamp}<span class="badge">${cat.nombre}</span></div>`;
+}
+
+function render(){
+  const grid = $("grid"); if(!grid) return;
+  const lista = EVENTOS.filter(e => filtro === "todas" || e.categoria === filtro);
+  grid.innerHTML = lista.length ? lista.map(e => {
+    const f = d(e.fecha), past = f < hoy;
+    return `<article class="card${past ? " past":""}" id="ev-${e.id}">
+      ${poster(e)}
+      <div class="meta"><span>${DIAS[f.getDay()].slice(0,3)} ${f.getDate()} nov</span><span>${esc(e.hora)}</span><span>${esc(e.lugar)}</span></div>
+      <h3>${esc(e.titulo)}</h3>
+      <p>${esc(e.descripcion)}</p>
+      <div class="actions">${past ? `<span class="free" style="color:var(--muted)">Celebrado</span>` : boton(e)}</div>
+    </article>`;}).join("") : `<p class="empty">No hay actividades de este tipo.</p>`;
+}
+
+function filtros(){
+  const box = $("filters"); if(!box) return;
+  const items = [["todas","Todas",null], ...Object.entries(CATEGORIAS).map(([k,v]) => [k,v.nombre,v.color])];
+  box.innerHTML = items.map(([k,n,c]) => `<button type="button" class="chip" id="f-${k}" data-k="${k}" aria-pressed="${k===filtro}">${c?`<i style="background:${c}"></i>`:""}${n}</button>`).join("");
+  box.onclick = ev => {
+    const b = ev.target.closest(".chip"); if(!b) return;
+    filtro = b.dataset.k;
+    box.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x.dataset.k === filtro));
+    render();
+  };
+}
+
+function irA(id){
+  if(filtro !== "todas"){ filtro = "todas"; filtros(); render(); }
+  const card = $("ev-" + id); if(!card) return;
+  card.scrollIntoView({block:"start"});
+  card.classList.add("flash"); setTimeout(() => card.classList.remove("flash"), 1600);
+}
+
+function calendario(){
+  const cal = $("cal"); if(!cal) return;
+  const porDia = {};
+  EVENTOS.forEach(e => { const n = d(e.fecha).getDate(); (porDia[n] ||= []).push(e); });
+  let html = ["L","M","X","J","V","S","D"].map(x => `<div class="dow">${x}</div>`).join("");
+  html += "<div></div>".repeat((d("2026-11-01").getDay() + 6) % 7);
+  for(let n=1; n<=30; n++){
+    const ev = porDia[n];
+    html += ev
+      ? `<button type="button" class="day has" data-id="${ev[0].id}" aria-label="${n} de noviembre: ${ev.map(x=>esc(x.titulo)).join(", ")}">${n}<span class="dots">${"<i></i>".repeat(ev.length)}</span></button>`
+      : `<div class="day">${n}</div>`;
+  }
+  cal.innerHTML = html;
+  cal.onclick = ev => { const b = ev.target.closest(".day.has"); if(b) irA(b.dataset.id); };
+}
+
+function portada(){
+  const ini = d("2026-11-01"), fin = d("2026-11-29");
+  const dias = Math.round((ini - hoy) / 864e5);
+  const cd = $("countdown");
+  if(cd){
+    if(dias > 1){ cd.textContent = `Empieza en ${dias} días`; cd.hidden = false; }
+    else if(dias === 1){ cd.textContent = "Empieza mañana"; cd.hidden = false; }
+    else if(hoy <= fin){ cd.textContent = "En marcha"; cd.hidden = false; }
+  }
+  const prox = EVENTOS.find(e => d(e.fecha) >= hoy);
+  const nx = $("next");
+  if(nx && prox){
+    const f = d(prox.fecha);
+    nx.innerHTML = `<span class="d">${f.getDate()}</span><span><small>Próxima cita · ${DIAS[f.getDay()]} ${f.getDate()} de noviembre · ${esc(prox.hora)}</small><b>${esc(prox.titulo)}</b></span>`;
+    nx.href = "#ev-" + prox.id; nx.hidden = false;
+    nx.onclick = ev => { ev.preventDefault(); irA(prox.id); };
+  }
+}
+
+function resto(){
+  const dias = new Set(EVENTOS.map(e => e.fecha)).size;
+  const bodegas = EVENTOS.filter(e => e.categoria === "bodega").length;
+  const cl = $("countLabel"); if(cl) cl.textContent = `${EVENTOS.length} actividades`;
+  const fx = $("facts");
+  if(fx) fx.innerHTML = `<div><b>${EVENTOS.length}</b><span>actividades</span></div><div><b>${dias}</b><span>días con programa</span></div><div><b>${bodegas}</b><span>visitas a bodega</span></div><div><b>5 €</b><span>catas y maridajes</span></div>`;
+  if(CONFIG.programaPdf){ const p = $("pdfBtn"); if(p){ p.href = CONFIG.programaPdf; p.hidden = false; } }
+  const mb = $("mailBox");
+  if(mb){
+    if(CONFIG.email){
+      mb.innerHTML = `<code>${esc(CONFIG.email)}</code><button type="button" id="copyMail">Copiar</button>`;
+      $("copyMail").onclick = function(){
+        const btn = this;
+        Promise.resolve().then(() => navigator.clipboard.writeText(CONFIG.email)).then(() => { btn.textContent = "Copiado"; }, () => {
+          const r = document.createRange(); r.selectNodeContents(mb.querySelector("code"));
+          const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+        });
+      };
+    } else mb.innerHTML = `<p>El correo de inscripciones se publicará en breve.</p>`;
+  }
+  const so = $("social"); if(so) so.innerHTML = CONFIG.redes.map(r => `<a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.nombre)}</a>`).join("");
+  const pa = $("partners"); if(pa) pa.innerHTML = CONFIG.colaboradores.map(c => `<span>${esc(c)}</span>`).join("");
+  const lg = $("legal"); if(lg) lg.textContent = CONFIG.copyright;
+  const ll = $("legalLinks"); if(ll) ll.innerHTML = CONFIG.legales.map(l => `<a href="${esc(l.url)}">${esc(l.nombre)}</a>`).join(" · ");
+}
+
+function navegacion(){
+  const nav = $("nav"), burger = $("burger"), links = $("links");
+  if(!nav) return;
+  const onScroll = () => nav.classList.toggle("solid", window.scrollY > 40);
+  onScroll(); window.addEventListener("scroll", onScroll, {passive:true});
+  if(burger) burger.onclick = () => {
+    const open = nav.classList.toggle("open");
+    burger.setAttribute("aria-expanded", open); burger.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+  };
+  if(links) links.onclick = ev => { if(ev.target.closest("a")){ nav.classList.remove("open"); burger && burger.setAttribute("aria-expanded", false); } };
+}
+
+function reveal(){
+  const els = document.querySelectorAll(".reveal");
+  if(!("IntersectionObserver" in window)){ els.forEach(el => el.classList.add("visible")); return; }
+  const io = new IntersectionObserver(entries => entries.forEach(en => {
+    if(en.isIntersecting){ en.target.classList.add("visible"); io.unobserve(en.target); }
+  }), {rootMargin:"0px 0px -8% 0px"});
+  els.forEach(el => io.observe(el));
+}
+
+safe(navegacion, "nav"); safe(filtros, "filtros"); safe(render, "agenda"); safe(calendario, "calendario");
+safe(portada, "portada"); safe(resto, "resto"); safe(reveal, "reveal");
+safe(() => { if(location.hash.startsWith("#ev-")){ const c = document.querySelector(location.hash); if(c) c.scrollIntoView(); } }, "hash");
+const hideLoader = () => { const l = $("loader"); if(l) l.classList.add("done"); };
+if(document.readyState === "complete") hideLoader(); else window.addEventListener("load", hideLoader);
+setTimeout(hideLoader, 1200);
+</script>
+
+</body>
+</html>
