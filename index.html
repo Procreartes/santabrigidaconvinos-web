@@ -37,9 +37,9 @@
   --wine:#C4566F; --wine-ink:#1A0F13; --vine:#9AAE6A; --ash:#0F0C0D; --gold:#D4A957;
   color-scheme:dark}
 *{box-sizing:border-box}
-[hidden]{display:none!important}
 img{max-width:100%}
 body{margin:0}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
 .wrap{max-width:1180px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px))}
@@ -200,6 +200,8 @@ nav.top.open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .copy{display:inline-flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
 .copy code{font-family:var(--mono);font-size:14px;user-select:all}
 .copy button{font:600 13px/1 var(--body);padding:8px 12px;border-radius:var(--radius);border:1px solid rgba(239,231,234,.4);background:transparent;color:#EFE7EA;cursor:pointer}
+.org-logo{display:inline-flex;margin-top:14px;background:#fff;border-radius:8px;padding:14px 18px}
+.org-logo img{display:block;width:240px;max-width:100%;height:auto}
 .partners{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
 .partners span{font-size:14px;padding:10px 14px;border:1px solid rgba(239,231,234,.22);border-radius:var(--radius)}
 .social{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
@@ -296,7 +298,9 @@ nav.top.open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
         <div class="social" id="social"></div>
       </div>
       <div>
-        <div class="label">Organizan y colaboran</div>
+        <div class="label">Organiza</div>
+        <div id="organiza"></div>
+        <div class="label" style="margin-top:22px">Colaboran</div>
         <div class="partners" id="partners"></div>
       </div>
     </div>
@@ -312,11 +316,14 @@ const CONFIG = {
   email: "",            // correo de inscripciones, p. ej. "inscripciones@..."
   programaPdf: "",      // enlace al PDF del programa completo
   redes: [              // p. ej. {nombre:"Instagram", url:"https://instagram.com/..."}
+    {nombre:"Instagram", url:"https://www.instagram.com/ayuntamientosb"},
+    {nombre:"Facebook",  url:"https://www.facebook.com/ayuntamientodesantabrigida"},
+    {nombre:"santabrigida.es", url:"https://www.santabrigida.es"}
   ],
+  organiza: {nombre:"Ayuntamiento de la Villa de Santa Brígida", logo:"img/logo-ayto-santa-brigida.png", url:"https://www.santabrigida.es"},
   legales: [            // p. ej. {nombre:"Aviso legal", url:"aviso-legal.html"}
   ],
   colaboradores: [
-    "Ayuntamiento de la Villa de Santa Brígida",
     "Cabildo de Gran Canaria · Consejería de Sector Primario",
     "Ruta del Vino de Gran Canaria",
     "D.O. Gran Canaria"
@@ -496,6 +503,10 @@ function resto(){
     } else mb.innerHTML = `<p>El correo de inscripciones se publicará en breve.</p>`;
   }
   const so = $("social"); if(so) so.innerHTML = CONFIG.redes.map(r => `<a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.nombre)}</a>`).join("");
+  const og = $("organiza");
+  if(og && CONFIG.organiza) og.innerHTML = CONFIG.organiza.logo
+    ? `<a class="org-logo" href="${esc(CONFIG.organiza.url)}" target="_blank" rel="noopener"><img src="${esc(CONFIG.organiza.logo)}" alt="${esc(CONFIG.organiza.nombre)}" width="240" height="94"></a>`
+    : `<div class="partners"><span>${esc(CONFIG.organiza.nombre)}</span></div>`;
   const pa = $("partners"); if(pa) pa.innerHTML = CONFIG.colaboradores.map(c => `<span>${esc(c)}</span>`).join("");
   const lg = $("legal"); if(lg) lg.textContent = CONFIG.copyright;
   const ll = $("legalLinks"); if(ll) ll.innerHTML = CONFIG.legales.map(l => `<a href="${esc(l.url)}">${esc(l.nombre)}</a>`).join(" · ");
