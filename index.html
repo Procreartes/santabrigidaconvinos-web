@@ -187,6 +187,16 @@ nav.top.open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .price{font-family:var(--display);font-size:22px}
 .price small{font-family:var(--body);font-size:12px;color:var(--muted)}
 .free{font-weight:600;font-size:14px;color:var(--vine)}
+.aviso{display:flex;align-items:center;gap:14px;border-radius:8px;padding:14px 18px;line-height:1.4}
+.aviso .ic{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-size:18px}
+.aviso b{display:block;font-size:16px}
+.aviso span{font-size:14px}
+.aviso-hero{margin-top:26px;max-width:520px;background:rgba(201,163,90,.16);border:1px solid rgba(201,163,90,.55);color:#fff}
+.aviso-hero .ic{background:var(--gold);color:#22170C}
+.aviso-hero span{color:rgba(255,255,255,.78)}
+.aviso-agenda{margin-bottom:28px;background:color-mix(in srgb,var(--gold) 14%,var(--surface));border:1px solid color-mix(in srgb,var(--gold) 45%,transparent)}
+.aviso-agenda .ic{background:var(--wine);color:var(--wine-ink)}
+.aviso-agenda span{color:var(--muted)}
 .card.past{opacity:.55}
 .empty{color:var(--muted);padding:40px 0}
 
@@ -246,6 +256,7 @@ nav.top.open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
       <h1>Santa Brígida <em>con Vinos</em></h1>
       <div class="dates"><strong>Del 1 al 29 de noviembre</strong><span class="pill" id="countLabel">18 actividades</span><span class="pill" id="countdown" hidden></span></div>
       <p class="lede">Un mes entero dedicado al vino de la Villa: catas, visitas a bodega, maridajes sonoros, las Noches de Vino y una ruta por la Caldera de Bandama.</p>
+      <div class="aviso aviso-hero" id="avisoHero" hidden><span class="ic" aria-hidden="true">31</span><div><b id="avisoHeroTit">Inscripciones a partir del 31 de octubre</b><span>Catas, maridajes y visitas a bodega tienen plazas limitadas. Las actividades de entrada libre no necesitan inscripción.</span></div></div>
       <div class="cta-row">
         <a class="btn btn-gold" href="#eventos">Ver actividades y reservar</a>
         <a class="btn btn-line" id="pdfBtn" href="#" target="_blank" rel="noopener" hidden>Descargar programa (PDF)</a>
@@ -283,6 +294,7 @@ nav.top.open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
       </div>
       <div class="filters" id="filters" role="group" aria-label="Filtrar por tipo"></div>
     </div>
+    <div class="aviso aviso-agenda" id="avisoAgenda" role="note" hidden><span class="ic" aria-hidden="true">31</span><div><b>Las inscripciones se abren el 31 de octubre</b><span>Ese día se activarán aquí los botones para reservar plaza y pagar cada actividad.</span></div></div>
     <div class="grid" id="grid"></div>
   </div>
 </section>
@@ -315,6 +327,7 @@ nav.top.open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 const CONFIG = {
   email: "",            // correo de inscripciones, p. ej. "inscripciones@..."
   programaPdf: "",      // enlace al PDF del programa completo
+  aperturaInscripciones: "2026-10-31",  // hasta esta fecha se muestra el aviso y los botones lo indican
   redes: [              // p. ej. {nombre:"Instagram", url:"https://instagram.com/..."}
     {nombre:"Instagram", url:"https://www.instagram.com/ayuntamientosb"},
     {nombre:"Facebook",  url:"https://www.facebook.com/ayuntamientodesantabrigida"},
@@ -393,6 +406,11 @@ const d = iso => new Date(iso + "T12:00:00");
 const hoy = new Date(); hoy.setHours(0,0,0,0);
 const GLASS = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 6h20c0 10-3 18-10 18S14 16 14 6z"/><path d="M24 24v14M16 42h16"/></svg>';
 let filtro = "todas";
+const antesApertura = () => !!CONFIG.aperturaInscripciones && hoy < new Date(CONFIG.aperturaInscripciones + "T00:00:00");
+function avisos(){
+  if(!antesApertura()) return;
+  ["avisoHero","avisoAgenda"].forEach(id => { const el = $(id); if(el) el.hidden = false; });
+}
 
 function boton(e){
   if(e.acceso === "libre") return `<span class="free">Entrada libre</span>`;
@@ -400,7 +418,7 @@ function boton(e){
   const left = e.acceso === "pago" ? `<span class="price">${e.precio} € <small>/ persona</small></span>` : `<span class="free">Gratuita con inscripción</span>`;
   const btn = e.url
     ? `<a class="btn btn-primary" href="${esc(e.url)}" target="_blank" rel="noopener">${txt}</a>`
-    : `<span class="btn" aria-disabled="true">Inscripción próximamente</span>`;
+    : `<span class="btn" aria-disabled="true">${antesApertura() ? "Inscripción desde el 31 oct" : "Inscripción próximamente"}</span>`;
   return left + btn;
 }
 
@@ -534,7 +552,7 @@ function reveal(){
 }
 
 safe(navegacion, "nav"); safe(filtros, "filtros"); safe(render, "agenda"); safe(calendario, "calendario");
-safe(portada, "portada"); safe(resto, "resto"); safe(reveal, "reveal");
+safe(avisos, "avisos"); safe(portada, "portada"); safe(resto, "resto"); safe(reveal, "reveal");
 safe(() => { if(location.hash.startsWith("#ev-")){ const c = document.querySelector(location.hash); if(c) c.scrollIntoView(); } }, "hash");
 const hideLoader = () => { const l = $("loader"); if(l) l.classList.add("done"); };
 if(document.readyState === "complete") hideLoader(); else window.addEventListener("load", hideLoader);
