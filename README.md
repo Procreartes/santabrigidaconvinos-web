@@ -6,3 +6,9 @@ Web estática del programa Santa Brígida con Vinos (1–29 de noviembre de 2026
 - `img/`: carteles de cada evento (`NN-nombre.jpg`, 900×1125), portada (`hero.jpg`, `hero-m.jpg`) e imagen para redes (`og.jpg`).
 
 Publicada en Cloudflare Pages, sin paso de compilación.
+
+## Cómo se edita (desde 2026-11)
+
+- **Desde el portal de Grupo Livon** (Gestor de webs → Santa Brígida con Vinos): «Edición» (año, fechas, texto y foto de portada, aviso de inscripciones, PDF y correo) y «Eventos» (una ficha por actividad, con su cartel).
+- O a mano en `data/edicion.json` y `data/eventos.json`.
+- Al guardar, la acción de GitHub ejecuta `scripts/generar.py`, que rellena `plantilla.html` y escribe `index.html`. No edites `index.html` a mano.
